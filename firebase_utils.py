@@ -2,6 +2,7 @@ import streamlit as st
 import pyrebase
 import firebase_admin
 from firebase_admin import credentials, firestore
+import traceback
 import json
 
 @st.cache_resource
@@ -24,6 +25,7 @@ def initialize_firebase():
         cred = credentials.Certificate(service_account_info)
     except Exception:
         st.error("Could not load Firebase Admin service account from secrets.")
+        st.text(traceback.format_exc())
         st.stop()
 
     if not firebase_admin._apps:

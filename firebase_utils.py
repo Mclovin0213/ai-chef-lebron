@@ -21,8 +21,7 @@ def initialize_firebase():
 
     try:
         service_account_info = st.secrets["firebase_admin_sdk"]
-        service_account_json = json.loads(json.dumps(service_account_info))
-        cred = credentials.Certificate(service_account_json)
+        cred = credentials.Certificate(service_account_info)
     except Exception:
         st.error("Could not load Firebase Admin service account from secrets.")
         st.stop()

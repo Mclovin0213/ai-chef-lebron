@@ -22,19 +22,19 @@ def initialize_firebase():
     auth = firebase.auth()
 
     try:
-        service_account_info = st.secrets["firebase_admin_sdk"]
+        service_account_info = dict(st.secrets["firebase_admin_sdk"])
 
-        if isinstance(service_account_info, str):
-            try:
-                # First, try to parse as JSON
-                service_account_info = json.loads(service_account_info.replace("'", '"'))
-            except json.JSONDecodeError:
-                try:
-                    # Fallback: try Python literal (safer for dicts with single quotes)
-                    service_account_info = ast.literal_eval(service_account_info)
-                except Exception as e:
-                    st.error(f"Failed to parse service account info: {e}")
-                    st.stop()
+        # if isinstance(service_account_info, str):
+        #     try:
+        #         # First, try to parse as JSON
+        #         service_account_info = json.loads(service_account_info.replace("'", '"'))
+        #     except json.JSONDecodeError:
+        #         try:
+        #             # Fallback: try Python literal (safer for dicts with single quotes)
+        #             service_account_info = ast.literal_eval(service_account_info)
+        #         except Exception as e:
+        #             st.error(f"Failed to parse service account info: {e}")
+        #             st.stop()
         
         cred = credentials.Certificate(service_account_info)
     except Exception:
